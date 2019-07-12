@@ -3,10 +3,16 @@
 
 
 class Room:
-    def __init__(self, name, description, items):
+    def __init__(self, name, description, enemy):
         self.name = name
         self.description = description
-        self.items = items
+        self.n_to = None
+        self.e_to = None 
+        self.w_to = None 
+        self.s_to = None
+        self.enemy = enemy
+        # self.treasure = treasure
 
-    def __enter__(self, playerName):
-        return f'{playername} has entered {self.name}. {self.description}'
+    def __str__(self):
+        return f'You are in the {self.name}. {self.description}'
+
