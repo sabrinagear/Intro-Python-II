@@ -10,19 +10,19 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons.", None),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", Enemy("Ghoul")),
+    'foyer':    Room("Foyer", """Dim light filters in from the south. \nDusty
+passages run north and east.""", Enemy("Ghoul"), ["bag of grain","doll"]),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", Enemy("Werewolf")),
+    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. \nAhead to the north, a light flickers in
+the distance, but there is no way across the chasm.""", Enemy("Werewolf"), ["moon powder"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", None),
+to north. The smell of gold permeates the air.""", Enemy("White Walker"), ["antidote", "Valerian Steel Shield"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", Enemy("Vampire")),
+chamber! What could be in here?""", Enemy("Vampire"), ["Treasure"]),
+
+'library':   Room("Grand Library", """You walk through a pair of heavy victorian doors into a grand circular room with walls that are lined with shelves of dusty tombs. \nThe only light comes from the moonlight that pours in from the dusty windows across the room.  \nIn the center of room hangs a grand chandelier that, many years ago, must have shone marvelously in moonlight. \nYears of neglect have robbed the room of its splendor.""", Enemy("Siren of the Night"), ["spellbook", "candles"])
 }
 
 
@@ -31,11 +31,13 @@ earlier adventurers. The only exit is to the south.""", Enemy("Vampire")),
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
+room['overlook'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
+room['narrow'].w_to = room['overlook']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['library'].e_to = room['foyer']
+room['foyer'].w_to = room['library']
 
  
 
@@ -55,10 +57,17 @@ while action != "Q":
     print(f'\n\nWelcome to the Land of Id, {player.name}. Adventure awaits. Lets begin.\n')
     player.locate()
     player.move()
-    if player.hasTreasure == False:
+    while player.hasTreasure == False:
         player.next()
-    else:
-        print(f"\nYou've found the treasure and defeated all of the monsters that terrorize these lands. Your adventuresome soul would wither if you stayed. Alas, the time has come for you to part ways with this place and travel onward to new lands, with new adventures. Farewell, {player.name}. Tales of your heroism will forever be told in this place.")
+    if player.hasTreasure == True:
+        time.sleep(1)
+        print("\n!!!\n")
+        time.sleep(1)
+        print(f"\nYou've found the treasure and defeated all of the monsters that terrorize these lands.\n")
+        time.sleep(1)
+        print("\nYour adventuresome soul would wither if you stayed. Alas, the time has come for you to part ways with this place and travel onward to new lands, with new adventures.\n") 
+        time.sleep(1) 
+        print(f"Farewell, {player.name}. Tales of your heroism will forever be told in this place.\n\n")
         action = "Q"
 
     

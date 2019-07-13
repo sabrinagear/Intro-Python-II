@@ -3,7 +3,7 @@
 
 
 class Room:
-    def __init__(self, name, description, enemy):
+    def __init__(self, name, description, enemy, items=None):
         self.name = name
         self.description = description
         self.n_to = None
@@ -11,7 +11,10 @@ class Room:
         self.w_to = None 
         self.s_to = None
         self.enemy = enemy
-        # self.treasure = treasure
+        if items != None:
+            self.items = items
+        else:
+            self.items = None
 
     def __str__(self):
         return f'You are in the {self.name}. {self.description}'
